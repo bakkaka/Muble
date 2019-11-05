@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container show">
+    <a href="{{ path('discussion_new') }}" class="btn btn-primary pull-right">
+        Create <span class="fa fa-plus-circle"></span>
+    </a>
+    <h1>Tous vos articles</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Utilisateur</th>
+
+            
+            <th>Modifié</th>
+            <th>Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for discussion in alldiscussions %}
+            <tr>
+                <td>{{ discussion.title }}</td>
+                <td>{{ discussion.user }}</td>
+                <td>
+                    <a href="{{ path('discussion_edit', {'slug': discussion.slug
+                    }) }}">Update
+                        <span class="fa fa-pencil"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('discussion_delete', {'slug': discussion.slug
+                    }) }}">Delete
+                        <span class="fa fa-trash-o"></span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+	<a href="{{path('app_account')}}">Retour à votre compte</a>
+</div>
+
+{% endblock %}

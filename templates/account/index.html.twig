@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Manage Account!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+	
+    
+{% endblock %}
+
+{% block body %}
+    <div class="container show account">
+        <div class="row user-menu-container square">
+            <div class="col-md-12 user-details">
+                <div class="row spacepurplebg white">
+                    <div class="col-md-2 no-pad">
+                        <div class="user-image">
+						{% for discussion in alldiscussions %}
+                           {#<img src="{{asset(author.image.webPath()) }}" class="img-responsive thumbnail">#}
+						   {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-10 no-pad">
+                        <div class="user-pad">
+                            <h3>Welcome back, {{ app.user.firstName }}</h3>
+					
+                            <a class="btn btn-labeled btn-info" href="#">
+                                <span class="btn-label"><i class="fa fa-pencil"></i></span>Update
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row overview">
+                    <div class="col-md-4 user-pad text-center">
+                        <h3>Cmmentaires</h3>
+                        <h4>184</h4>
+                    </div>
+                    <div class="col-md-4 user-pad text-center">
+                        <h3>Articles publiés</h3>
+						
+						{% if alldiscussions %}
+                        <h4><a href="{{ path('discussion_list')}}">{{ alldiscussions|length }}</a></h4>
+						{% else %}
+						<h4>Vous avez 0 discussion(s)</h4>
+						{% endif %}
+                    </div>
+                    <div class="col-md-4 user-pad text-center">
+                       <h3>Biens publiés</h3>
+						{% if allbiens %}
+                 <h4><a href="{{ path('bien_list')}}">{{ allbiens|length }}</a></h4>
+				    {% else %}
+					<h4>Vous avez 0 bien(s)</h4>
+						{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+{% endblock %}

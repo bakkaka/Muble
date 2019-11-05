@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container show">
+    <a href="{{ path('bien_new') }}" class="btn btn-primary pull-right">
+        Create <span class="fa fa-plus-circle"></span>
+    </a>
+    <h1>Tous vos biens </h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Utilisateur</th>
+
+            
+            <th>Editer</th>
+            <th>Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for bien in allbiens %}
+            <tr>
+                <td>{{ bien.title }}</td>
+                <td>{{ bien.user }}</td>
+                <td>
+                    <a href="{{ path('admin_bien_edit', {'slug': bien.slug
+                    }) }}">Editer
+                        <span class="fa fa-pencil"></span>
+                    </a>
+                </td>
+                <td>
+				 <form method="post" action="{{ path('bien_delete', {'slug': bien.slug }) }}" style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr ?')">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ bien.slug) }}">
+            <button class="btn btn-danger">Supprimer</button>
+				
+                {#    <a href="{{ path('admin_property_delete', {id: property.id
+                    }) }}">Delete
+                        <span class="fa fa-trash-o"></span>
+                    </a>#}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+	<a href="{{path('app_account')}}">Retour à votre compte</a>
+</div>
+
+{% endblock %}

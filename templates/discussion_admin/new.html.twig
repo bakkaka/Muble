@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Discussion{% endblock %}
+
+{% block body %}
+  <div class="container show">
+    <h1>Create new Discussion</h1>
+
+    {{ include('discussion_admin/_form.html.twig') }}
+
+    <a href="{{ path('discussion_list') }}">back to your account</a>
+	</div>
+{% endblock %}

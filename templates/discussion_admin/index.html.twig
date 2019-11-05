@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %} 
+<div class="container show">
+   <a href="{{ path('discussion_new') }}" class="btn btn-primary pull-right">
+        Create <span class="fa fa-plus-circle"></span>
+    </a>
+    <h1>Articles administration</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+               
+                <th class="fuchsia">Titre</th>
+                <th class="fuchsia">Créer le</th>
+				<th class="fuchsia">User</th>
+				<th class="fuchsia">Email</th>
+               
+		
+                
+                
+                
+                <th class="green">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for discussion in discussions %}
+            <tr>
+               
+                <td>{{ discussion.title }}</td>
+                <td>{{ discussion.createdAt ? discussion.createdAt|date('d-m-Y') : '' }}</td>
+              
+                <td>{{ discussion.user }}</td>
+                <td>{{ discussion.user.email }}</td>
+                
+                <td>
+                    <a href="{{ path('admin_discussion_edit', {'slug': discussion.slug }) }}">editer</a>
+					|
+                    <a href="{{ path('admin_discussion_delete', {'slug': discussion.slug }) }}">supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+     <div class="text-left">
+    <a href="{{ path('admin_bien_index') }}" class="btn btn-primary">Retour à l'administration des biens</a>
+	</div>
+	
+	
+	</div>
+{% endblock %}

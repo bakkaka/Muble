@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Gérer les biens' %}
+
+{% block body %}
+  <div class="container show mt-4">
+  <a href="{{ path('admin_bien_new') }}" class="btn btn-primary pull-right">
+        Create <span class="fa fa-plus-circle"></span>
+    </a>
+
+    <h1>Administration de biens</h1>
+{#
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+    {% endfor %}
+	#}
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="fuchsia">Titre</th>
+		 <th class="fuchsia">User</th>
+		  <th class="fuchsia">Email</th>
+        <th class="green">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for bien in biens %}
+      <tr>
+        <td>{{ bien.title }}</td>
+		<td>{{ bien.user }}</td>
+		<td>{{ bien.user.email }}</td>
+        <td>
+          <a href="{{ path('admin_bien_edit', {'slug': bien.slug }) }}" class="btn btn-secondary">Editer</a>
+          <form method="post" action="{{ path('admin_bien_delete', {'slug': bien.slug }) }}" style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr ?')">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ bien.slug ) }}">
+            <button class="btn btn-danger">Supprimer</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="text-left">
+      <a href="{{ path('admin_discussion_index') }}" class="btn btn-primary">Retour à l'administration d'articles</a>
+    </div>
+
+  </div>
+{% endblock %}

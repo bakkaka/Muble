@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title bien.title %}
+
+{% block body %}
+  
+    <div class="container show">
+	                   {% if is_granted('ROLE_USER') %}
+                                
+                                 <button class="btn btn-primary pull-right"><a href="{{ path("bien_new") }}">Deposez une annonce</a></button>
+								 
+						{% endif %}
+						
+                    
+                
+
+      {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+          {{ message }}
+        </div>
+      {% endfor %}
+
+      {% if not form.vars.valid %}
+        <div class="alert alert-danger">
+          Erreur je ne sais pas quoi
+        </div>
+      {% endif %}
+
+      <div class="row">
+        <div class="col-md-8">
+          <div data-slider>
+            {% if bien.pictures is empty %}
+              <img src="{{ '/images/biens/empty.jpg' | imagine_filter('medium') }}" alt="card-img-top" style="width: 100%; height:auto;">
+            {% else %}
+              {% for picture in bien.pictures %}
+                <img src="{{ vich_uploader_asset(picture, 'imageFile') | imagine_filter('medium') }}" alt="card-img-top" style="width: 100%; height:auto;">
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h1>{{ bien.title }}</h1>
+          <h2>{{ bien.rooms }} pièces - {{ bien.surface }} m²</h2>
+		  <i class="fa fa-phone-square" aria-hidden="true"> <span class="fuchsia">{{ bien.user.phone}}</span> Nom : <span class="green">{{ bien.user.firstName}} </span> </i>
+		   
+          
+		  
+          <div class="text-primary" style="font-size: 4rem;font-weight: bold;">{{ bien.formattedPrice }} €</div>
+          <a href="#" class="btn btn-primary" id="contactButton"{% if form.vars.submitted %} style="display: none;"{% endif %}>Contacter l'agence</a>
+          <div id="contactForm" class="mt-4"{% if not form.vars.submitted %} style="display: none;"{% endif %}>
+            {{ form_start(form) }}
+            <div class="row">
+              <div class="col">{{ form_row(form.firstname) }}</div>
+              <div class="col">{{ form_row(form.lastname) }}</div>
+            </div>
+            <div class="row">
+              <div class="col">{{ form_row(form.phone) }}</div>
+              <div class="col">{{ form_row(form.email) }}</div>
+            </div>
+            {{ form_rest(form) }}
+            <div class="form-group">
+              <button class="btn btn-primary">Envoyer</button>
+            </div>
+            {{ form_end(form) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container show">
+    <p>
+      {{ bien.description | nl2br }}
+    </p>
+
+    <div class="row">
+      <div class="col-md-8">
+        <h2>Caractéristiques</h2>
+        <table class="table table-striped">
+          <tr>
+            <td>Surface habitable</td>
+            <td>{{ bien.surface }} m²</td>
+          </tr>
+          <tr>
+            <td>Pièces</td>
+            <td>{{ bien.rooms }}</td>
+          </tr>
+          <tr>
+            <td>Chambres</td>
+            <td>{{ bien.bedrooms }}</td>
+          </tr>
+          <tr>
+            <td>Etage</td>
+            <td>{{ bien.floor }}</td>
+          </tr>
+          <tr>
+            <td>Chauffage</td>
+            <td>{{ bien.heatType }}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-4">
+        <h2>Spécificités</h2>
+        <ul class="list-group">
+          {% for option in bien.options %}
+          <li class="list-group-item">{{ option.name }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {#<div id="map" style="width: 100%; height: 400px" data-lat="{{ property.lat }}" data-lng="{{ property.lng }}"></div>#}
+  </div>
+{% endblock %}
+
